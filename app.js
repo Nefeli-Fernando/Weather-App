@@ -1,4 +1,5 @@
-
+//const apiKey = "f9ed8685a1a04f43a94105517261210";
+//const baseUrl = "http://api.weatherapi.com/v1";
 
 fetch(`${baseUrl}/current.json?key=${apiKey}&q=Galle`).then(res => res.json()).then(data =>{
     console.log(data);

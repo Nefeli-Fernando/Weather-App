@@ -1,4 +1,20 @@
 /* From Uiverse.io by Smit-Prajapati */
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+.background-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
 .container {
   position: fixed;
   top: 16px;
@@ -8,7 +24,7 @@
   padding: 10px;
   display: grid;
   place-content: center;
-  z-index: 0;
+  z-index: 1;
   max-width: 250px;
   margin: 0;
 }
@@ -78,4 +94,163 @@
 
 .search__icon path {
   fill: white;
+}
+
+.weather-content {
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 24px;
+  padding: 80px 16px 24px;
+  position: relative;
+}
+
+.page-title {
+  margin: 0;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+.card {
+  box-sizing: border-box;
+  width: min(100%, 240px);
+  padding: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 28px;
+  background: rgba(16, 34, 58, 0.78);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+.card-title {
+  margin: 0 0 18px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.weather-overview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 112px;
+}
+
+.weather-icon {
+  width: 112px;
+  height: 112px;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.weather-cloud {
+  fill: #f3f7fe;
+  stroke: #deeafb;
+  stroke-width: 0.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cloud-drift 2.4s ease-in-out infinite;
+}
+
+.rain-drops {
+  fill: none;
+  stroke: #60a5fa;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.rain-drops path {
+  animation: rain-fall 0.8s linear infinite;
+}
+
+.rain-drops path:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.rain-drops path:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes cloud-drift {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes rain-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .weather-cloud,
+  .rain-drops path {
+    animation: none;
+  }
+}
+
+.temperature {
+  margin: 0;
+  font-size: 4rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.weather-details {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.condition {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.humidity {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+}
+
+.humidity strong {
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .container {
+    top: 12px;
+    right: 12px;
+  }
+
+  .weather-content {
+    padding-top: 90px;
+  }
 }
