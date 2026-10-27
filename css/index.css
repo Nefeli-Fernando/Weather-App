@@ -254,3 +254,24 @@ body {
     padding-top: 90px;
   }
 }
+
+.error-message{
+    min-height: 1.4em;
+    margin-bottom:8px;
+    color: #ffb4ab;
+    text-align: center;
+}
+
+.weather-icon{
+    width: 64px;
+    height:64px;
+}
+
+.forecast {
+    position: relative;
+    display: flex;
+    justify-content:center;
+    gap:12px;
+    padding: 16px;
+}
+
