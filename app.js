@@ -29,12 +29,30 @@ weatherForm.addEventListener("searchBtn",async event => {
 });
 
 async function getWeatherData(city){
-fetch(`${baseUrl}/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=3. encodeURIComponent`).then(res => res.json()).then(data =>{
-    console.log(data);
-});
-
+fetch(`${baseUrl}/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=3`).then(res => res.json());
 }
 
+function search(){
+    const city = input.value.trim();
+
+    if(!city){
+        displayError("Please enter a city");
+        return;
+    }
+
+    getWeatherData(city)
+    .then(data => {
+        if(data.error){
+            displayError(data.error.message);
+            return;
+        }
+        displayWeather(data);
+    })
+    .catch(error = > {
+        console.error(error);
+        displayError("Something went wrong.Try again");
+    });
+}
 function displayWeatherInfo(data){
 
 
