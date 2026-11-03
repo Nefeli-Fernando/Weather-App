@@ -1,38 +1,32 @@
 const input = document.querySelector(".input");
-const searchBtn = document.getElementById("searchBtn");
+const searchForm = document.querySelector(".search-container");
 const temperatureEl = document.querySelector(".temperature");
 const conditionEl = document.querySelector(".condition");
 const humidityEl = document.querySelector(".humidity strong");
+const weatherIconEl = document.querySelector(".weather-icon");
 const forecastEl = document.querySelector(".forecast");
 
 const apiKey = "f9ed8685a1a04f43a94105517261210";
-const baseUrl = "http://api.weatherapi.com/v1";
+const baseUrl = "https://api.weatherapi.com/v1";
 
-//FETCH the weather and the forecasrrr hre
-weatherForm.addEventListener("searchBtn",async event => {
-
+//SEARCH WHEN THE FORM IS SUBMITTED
+searchForm.addEventListener("submit", event => {
     event.preventDefault();
-    const city = cityInput.value;
-
-        if(city){
-            try{
-                const weatherData = await getWeatherData(city);
-                displayWeatherInfo(weatherData);
-            }catch(error){
-                console.error(error);
-                displayError(error);
-            }
-        }
-        else{
-            displayError("Please enter a city");
-        }
+    search();
 });
 
+//FETCH the weather and the forecast here
 async function getWeatherData(city){
-fetch(`${baseUrl}/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=3`).then(res => res.json());
+    const res = await fetch(`${baseUrl}/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=3`);
+    const data = await res.json();
+
+    if(!res.ok){
+        throw new Error(data.error ? data.error.message : "Something went wrong. Try again");
+    }
+    return data;
 }
 
-function search(){
+async function search(){
     const city = input.value.trim();
 
     if(!city){
@@ -40,39 +34,44 @@ function search(){
         return;
     }
 
-    getWeatherData(city)
-    .then(data => {
-        if(data.error){
-            displayError(data.error.message);
-            return;
-        }
-        displayWeather(data);
-    })
-    .catch(error = > {
+    try{
+        const data = await getWeatherData(city);
+        displayWeatherInfo(data);
+    }catch(error){
         console.error(error);
-        displayError("Something went wrong.Try again");
-    });
+        displayError(error.message);
+    }
 }
+
+//SHOW TODAY'S WEATHER
 function displayWeatherInfo(data){
+    temperatureEl.textContent = Math.round(data.current.temp_c) + "°";
+    conditionEl.textContent = data.current.condition.text;
+    humidityEl.textContent = data.current.humidity + "%";
+    weatherIconEl.src = `https:${data.current.condition.icon}`;
+    weatherIconEl.alt = data.current.condition.text;
 
+    displayForecast(data.forecast.forecastday);
+}
 
+//SHOW ONE CARD PER FORECAST DAY
+function displayForecast(days){
+    forecastEl.innerHTML = "";
+
+    days.forEach(day => {
+        const dayName = new Date(day.date + "T00:00:00").toLocaleDateString("en-US", {weekday:"short"}); //gives Mon, Tue, etc
+
+        const card = document.createElement("div");
+        card.className = "forecast-day";
+        card.innerHTML = `
+            <p>${dayName}</p>
+            <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
+            <p>${Math.round(day.day.maxtemp_c)}° / ${Math.round(day.day.mintemp_c)}°</p>
+        `;
+        forecastEl.appendChild(card);
+    });
 }
 
 function displayError(message){
-    alert("Please enter a city")
-
+    alert(message);
 }
-
-//FETCHES API KEY HERE
-
-    document.getElementById("weatherInfo").innerHTML = `
-    <div>
-        <h1>${data.current.condition.text}</h1>
-        <img src="${data.current.condition.icon}" alt="">
-        <p>${data.current.temp_c}°C</p>
-        <p>${data.current.humidity}%</p>
-    </div>`
-    new Date(data).toLocaleDateString("en-US", {weekday:"short"}); //gives mon,tue,etc
-
-
-

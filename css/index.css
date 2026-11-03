@@ -1,4 +1,5 @@
 /* From Uiverse.io by Smit-Prajapati */
+@import url('https://fonts.googleapis.com/css2?family=BBH+Bartle&display=swap');
 body {
     margin: 0;
     min-height: 100vh;
@@ -16,25 +17,23 @@ body {
 }
 
 .container {
-    position: fixed;
-    top: 16px;
-    right: 16px;
+    position: relative;
     background: linear-gradient(135deg, rgb(179, 208, 253) 0%, rgb(164, 202, 248) 100%);
     border-radius: 1000px;
-    padding: 10px;
-    display: grid;
-    place-content: center;
+    padding: 8px;
     z-index: 1;
-    max-width: 250px;
-    margin: 0;
+    width: min(460px, calc(100vw - 32px));
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 
 .search-container {
     position: relative;
     width: 100%;
+    box-sizing: border-box;
     border-radius: 50px;
     background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
-    padding: 5px;
+    padding: 4px;
     display: flex;
     align-items: center;
 }
@@ -58,17 +57,19 @@ body {
     bottom: -1px;
     right: -1px;
     background: linear-gradient(0deg, rgb(163, 206, 255) 0%, rgb(211, 232, 255) 100%);
-    box-shadow: rgba(79, 156, 232, 0.7019607843) 3px 3px 5px 0px, rgba(79, 156, 232, 0.7019607843) 5px 5px 20px 0px;
+    box-shadow: rgba(79, 156, 232, 0.7019607843) 3px 3px 5px 0px, rgba(141, 174, 206, 0.702) 5px 5px 20px 0px;
     z-index: -2;
 }
 
 .input {
-    padding: 10px;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 8px 10px;
     width: 100%;
     background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
     border: none;
     color: #9EBCD9;
-    font-size: 20px;
+    font-size: 16px;
     border-radius: 50px;
 }
 
@@ -77,23 +78,37 @@ body {
     background: linear-gradient(135deg, rgb(239, 247, 255) 0%, rgb(214, 229, 247) 100%);
 }
 
-.search__icon {
-    width: 50px;
-    aspect-ratio: 1;
-    border-left: 2px solid white;
-    border-top: 3px solid transparent;
-    border-bottom: 3px solid transparent;
+.search-container button {
+    display: grid;
+    flex: 0 0 32px;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
     border-radius: 50%;
-    padding-left: 12px;
-    margin-right: 10px;
+    background: transparent;
+    cursor: pointer;
 }
 
-.search__icon:hover {
-    border-left: 3px solid white;
+.search-container button:hover,
+.search-container button:focus-visible {
+    background: rgba(79, 156, 232, 0.18);
+}
+
+.search-container button:focus-visible {
+    outline: 2px solid #323d49;
+    outline-offset: 1px;
+}
+
+.search__icon {
+    display: block;
+    width: 20px;
+    height: 20px;
 }
 
 .search__icon path {
-    fill: white;
+    fill: #4d83b8;
 }
 
 .weather-content {
@@ -108,9 +123,15 @@ body {
 }
 
 .page-title {
+    position: absolute;
+    top: 16px;
+    right: 16px;
     margin: 0;
-    text-align: center;
+    text-align: right;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+    font-family: "BBH Bartle", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .card {
@@ -245,7 +266,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .container {
+  .page-title {
     top: 12px;
     right: 12px;
   }
@@ -275,3 +296,21 @@ body {
     padding: 16px;
 }
 
+.forecast-day{
+    min-width: 96px;
+    padding: 12px 8px;
+    text-align:center;
+    color: #fff;
+    background : rgba(255,255,255,0.18);
+    backdrop-filter:blur(6px);
+    border-radius:16px;
+}
+
+.forecast-day img{
+    width:48px;
+    height:48px;
+}
+
+.forecast-name{
+    font-weight:600;
+}
