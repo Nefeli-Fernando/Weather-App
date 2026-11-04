@@ -59,7 +59,7 @@ function displayForecast(days){
     forecastEl.innerHTML = "";
 
     days.forEach(day => {
-        const dayName = new Date(day.date + "T00:00:00").toLocaleDateString("en-US", {weekday:"short"}); //gives Mon, Tue, etc
+        const dayName = new Date(day.date + "T00:00:00").toLocaleDateString("en-US", {weekday:"long"}); //gives Mon, Tue, etc
 
         const card = document.createElement("div");
         card.className = "forecast-day";
